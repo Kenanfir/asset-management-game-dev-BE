@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  githubId  Int      @unique
+  login     String
+  name      String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  uploadJobs UploadJob[]
+
+  @@map("users")
+}
+
+model Project {
+  id           String    @id @default(cuid())
+  name         String
+  repo         String
+  status       String    @default("active")
+  latestSyncAt DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  assetGroups AssetGroup[]
+
+  @@map("projects")
+}
+
+model AssetGroup {
+  id        String   @id @default(cuid())
+  projectId String
+  key       String
+  type      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  subAssets SubAsset[]
+
+  @@unique([projectId, key])
+  @@map("asset_groups")
+}
+
+model SubAsset {
+  id            String   @id @default(cuid())
+  groupId       String
+  key           String
+  type          String
+  basePath      String
+  pathTemplate  String
+  currentVersion Int     @default(0)
+  rulePackKey   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  group   AssetGroup    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  history AssetHistory[]
+
+  @@unique([groupId, key])
+  @@map("sub_assets")
+}
+
+model AssetHistory {
+  id         String   @id @default(cuid())
+  subAssetId String
+  version    Int
+  changeNote String?
+  filePath   String?
+  fileSize   Int?
+  fileHash   String?
+  createdAt  DateTime @default(now())
+
+  subAsset SubAsset @relation(fields: [subAssetId], references: [id], onDelete: Cascade)
+
+  @@unique([subAssetId, version])
+  @@map("asset_history")
+}
+
+model UploadJob {
+  id              String      @id @default(cuid())
+  status          JobStatus   @default(QUEUED)
+  mode            UploadMode
+  createdAt       DateTime    @default(now())
+  createdByUserId String
+  details         Json?
+  errorMessage    String?
+  completedAt     DateTime?
+
+  user User @relation(fields: [createdByUserId], references: [id])
+
+  @@map("upload_jobs")
+}
+
+enum JobStatus {
+  QUEUED
+  PROCESSING
+  DONE
+  ERROR
+}
+
+enum UploadMode {
+  SINGLE
+  SEQUENCE
+}
