@@ -5,6 +5,7 @@ import { FileValidationService } from './file-validation.service';
 import { AuthenticatedUser } from '../modules/auth/types/authenticated-user.type';
 import { CreateUploadDto } from '../validations/uploads/create-upload.dto';
 import { UploadJobDto } from '../validations/uploads/upload-job.dto';
+import { UploadedFile } from '../common/types/uploaded-file.interface';
 
 @Injectable()
 export class UploadsService {
@@ -15,7 +16,7 @@ export class UploadsService {
     ) { }
 
     async createUploadJob(
-        files: Express.Multer.File[],
+        files: UploadedFile[],
         createUploadDto: CreateUploadDto,
         user: AuthenticatedUser,
     ): Promise<UploadJobDto> {

@@ -4,6 +4,8 @@ import { ValidationPipe, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
+import fastifyCookie from '@fastify/cookie';
+import fastifyMultipart from '@fastify/multipart';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
@@ -14,6 +16,12 @@ async function bootstrap() {
         AppModule,
         new FastifyAdapter({ logger: false }),
     );
+
+    // Register Fastify plugins for cookie and file upload support
+    // @ts-expect-error - Type mismatch due to how NestJS wraps Fastify instance, but works at runtime
+    await app.register(fastifyCookie);
+    // @ts-expect-error - Type mismatch due to how NestJS wraps Fastify instance, but works at runtime
+    await app.register(fastifyMultipart);
 
     const configService = app.get(ConfigService);
     const logger = new Logger('Bootstrap');

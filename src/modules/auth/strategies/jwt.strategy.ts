@@ -1,16 +1,16 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
-import { Request } from 'express';
+import { FastifyRequest } from 'fastify';
 import { SessionService } from '../../../services/session.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(private readonly sessionService: SessionService) {
         super({
-            jwtFromRequest: (req: Request) => {
+            jwtFromRequest: (req: FastifyRequest) => {
                 // Get session ID from cookie
-                return req.cookies?.sid || null;
+                return (req as any).cookies?.sid || null;
             },
             ignoreExpiration: false,
             secretOrKey: process.env.SESSION_SECRET,
@@ -18,8 +18,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    async validate(req: Request, payload: any) {
-        const sessionId = req.cookies?.sid;
+    async validate(req: FastifyRequest, payload: any) {
+        const sessionId = (req as any).cookies?.sid;
 
         if (!sessionId) {
             throw new UnauthorizedException('No session found');

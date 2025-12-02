@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Req, Res, UseGuards, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
-import { Request, Response } from 'express';
+import { FastifyRequest, FastifyReply } from 'fastify';
 import { AuthGuard } from '@nestjs/passport';
 
-interface RequestWithSession extends Request {
+interface RequestWithSession extends FastifyRequest {
     session: {
         oauthState?: string;
     };
@@ -25,7 +25,7 @@ export class AuthController {
     @Get('github/start')
     @ApiOperation({ summary: 'Start GitHub OAuth flow' })
     @ApiResponse({ status: 302, description: 'Redirect to GitHub authorization' })
-    async startGitHubAuth(@Req() req: RequestWithSession, @Res() res: Response) {
+    async startGitHubAuth(@Req() req: RequestWithSession, @Res() res: FastifyReply) {
         const state = this.authService.generateState();
         const authUrl = this.authService.getGitHubAuthUrl(state);
 
@@ -45,7 +45,7 @@ export class AuthController {
         @Query('code') code: string,
         @Query('state') state: string,
         @Req() req: RequestWithSession,
-        @Res() res: Response,
+        @Res() res: FastifyReply,
     ) {
         try {
             // Validate state
@@ -66,7 +66,7 @@ export class AuthController {
             const sessionId = await this.sessionService.createSession(user);
 
             // Set session cookie
-            res.cookie('sid', sessionId, {
+            res.setCookie('sid', sessionId, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'none',
@@ -87,8 +87,8 @@ export class AuthController {
     @Post('logout')
     @ApiOperation({ summary: 'Logout user' })
     @ApiResponse({ status: 204, description: 'User logged out successfully' })
-    async logout(@Req() req: Request, @Res() res: Response) {
-        const sessionId = req.cookies?.sid;
+    async logout(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
+        const sessionId = (req as any).cookies?.sid;
 
         if (sessionId) {
             await this.sessionService.destroySession(sessionId);

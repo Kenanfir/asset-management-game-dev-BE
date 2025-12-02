@@ -3,20 +3,19 @@ import {
     Post,
     Get,
     Param,
-    UseInterceptors,
-    UploadedFiles,
     Body,
     UseGuards,
     BadRequestException,
 } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiResponse, ApiConsumes, ApiParam } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../modules/auth/decorators/user.decorator';
+import { Files } from '../common/decorators/files.decorator';
 import { AuthenticatedUser } from '../modules/auth/types/authenticated-user.type';
 import { UploadsService } from '../services/uploads.service';
 import { CreateUploadDto } from '../validations/uploads/create-upload.dto';
 import { UploadJobDto } from '../validations/uploads/upload-job.dto';
+import { UploadedFile } from '../common/types/uploaded-file.interface';
 
 @ApiTags('Uploads')
 @Controller('uploads')
@@ -25,12 +24,6 @@ export class UploadsController {
 
     @Post()
     @UseGuards(AuthGuard('jwt'))
-    @UseInterceptors(FilesInterceptor('files', 10, {
-        limits: {
-            fileSize: 10 * 1024 * 1024, // 10MB per file
-            files: 10, // Max 10 files
-        },
-    }))
     @ApiOperation({ summary: 'Upload files for processing' })
     @ApiConsumes('multipart/form-data')
     @ApiResponse({
@@ -41,7 +34,7 @@ export class UploadsController {
     @ApiResponse({ status: 400, description: 'Invalid upload request' })
     @ApiResponse({ status: 401, description: 'Unauthorized' })
     async uploadFiles(
-        @UploadedFiles() files: Express.Multer.File[],
+        @Files() files: UploadedFile[],
         @Body() createUploadDto: CreateUploadDto,
         @User() user: AuthenticatedUser,
     ) {
