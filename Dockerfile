@@ -45,4 +45,4 @@ USER nestjs
 EXPOSE 4000
 
 # Start the application
-CMD ["node", "dist/main"]
+CMD ["node", "dist/src/main"]
