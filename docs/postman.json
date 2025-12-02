@@ -1,0 +1,394 @@
+{
+    "info": {
+        "_postman_id": "asset-management-game-dev-backend",
+        "name": "Asset Management Game Dev Backend",
+        "description": "API collection for the Asset Management Game Dev Backend.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "https://trackrbackend.serverkn.com/api/v1",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Health",
+            "item": [
+                {
+                    "name": "Get Health Status",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/health",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "health"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Start GitHub OAuth",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/auth/github/start",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "github",
+                                "start"
+                            ]
+                        },
+                        "description": "Initiates the GitHub OAuth flow. In a browser, this redirects to GitHub."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Current User",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/auth/me",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "me"
+                            ]
+                        },
+                        "description": "Returns the currently authenticated user. Requires 'sid' cookie."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/auth/logout",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "logout"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Projects",
+            "item": [
+                {
+                    "name": "List Projects",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/projects",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "projects"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Project by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/projects/:id",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "projects",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "proj_abc123",
+                                    "description": "Project ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Project Assets",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/projects/:id/assets?page=1&limit=20",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "projects",
+                                ":id",
+                                "assets"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "20"
+                                }
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "proj_abc123",
+                                    "description": "Project ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Assets",
+            "item": [
+                {
+                    "name": "List Asset Groups",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/assets/groups?projectId=",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "assets",
+                                "groups"
+                            ],
+                            "query": [
+                                {
+                                    "key": "projectId",
+                                    "value": "",
+                                    "description": "Optional: Filter by Project ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "List Sub-Assets",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/assets/sub-assets?groupId=&projectId=",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "assets",
+                                "sub-assets"
+                            ],
+                            "query": [
+                                {
+                                    "key": "groupId",
+                                    "value": "",
+                                    "description": "Optional: Filter by Group ID"
+                                },
+                                {
+                                    "key": "projectId",
+                                    "value": "",
+                                    "description": "Optional: Filter by Project ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Sub-Asset History",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/assets/sub-assets/:id/history",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "assets",
+                                "sub-assets",
+                                ":id",
+                                "history"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "sub_123",
+                                    "description": "Sub-Asset ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Uploads",
+            "item": [
+                {
+                    "name": "Upload Files",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "files",
+                                    "type": "file",
+                                    "src": []
+                                },
+                                {
+                                    "key": "targetSubassetIds",
+                                    "value": "sub_123",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "mode",
+                                    "value": "single",
+                                    "type": "text",
+                                    "description": "single | sequence"
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/uploads",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "uploads"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Upload Job Status",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/uploads/:id",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "uploads",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "job_789",
+                                    "description": "Upload Job ID"
+                                }
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Path Resolution",
+            "item": [
+                {
+                    "name": "Resolve Path",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"base\": \"sprites/player\",\n  \"key\": \"player-idle\",\n  \"version\": 3,\n  \"ext\": \"png\",\n  \"pathTemplate\": \"{base}/{key}_v{version}.{ext}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/path/resolve",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "path",
+                                "resolve"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Rule Packs",
+            "item": [
+                {
+                    "name": "Get Rule Packs",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/rule-packs",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "rule-packs"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ]
+}
