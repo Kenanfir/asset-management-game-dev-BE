@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { QueueService } from '../queue/queue.service';
+import { PrismaService } from './prisma.service';
+import { QueueService } from './queue.service';
 import { FileValidationService } from './file-validation.service';
-import { AuthenticatedUser } from '../auth/types/authenticated-user.type';
-import { CreateUploadDto } from './dto/create-upload.dto';
-import { UploadJobDto } from './dto/upload-job.dto';
+import { AuthenticatedUser } from '../modules/auth/types/authenticated-user.type';
+import { CreateUploadDto } from '../validations/uploads/create-upload.dto';
+import { UploadJobDto } from '../validations/uploads/upload-job.dto';
 
 @Injectable()
 export class UploadsService {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RulePackDto } from './dto/rule-pack.dto';
+import { RulePackDto } from '../validations/rules/rule-pack.dto';
 
 @Injectable()
 export class RulesService {

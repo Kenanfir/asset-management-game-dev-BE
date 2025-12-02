@@ -44,13 +44,20 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         );
 
         // Send error response
+        // Send error response
+        const errors = [];
+        if (details) {
+            if (Array.isArray(details)) {
+                errors.push(...details);
+            } else {
+                errors.push(details);
+            }
+        }
+
         response.status(status).json({
-            error: {
-                code: this.getErrorCode(status),
-                message,
-                details,
-                requestId,
-            },
+            message,
+            content: null,
+            errors,
         });
     }
 

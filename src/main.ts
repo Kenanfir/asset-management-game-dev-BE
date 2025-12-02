@@ -7,6 +7,7 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestFastifyApplication>(
@@ -59,6 +60,9 @@ async function bootstrap() {
 
     // Global exception filter
     app.useGlobalFilters(new GlobalExceptionFilter());
+
+    // Global response interceptor
+    app.useGlobalInterceptors(new ResponseInterceptor());
 
     // Swagger documentation (dev only)
     if (configService.get('NODE_ENV') === 'development') {

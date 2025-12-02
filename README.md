@@ -12,6 +12,17 @@ A production-ready NestJS backend API for managing game development assets with 
 - **Validation**: class-validator with Zod config validation
 - **Documentation**: OpenAPI/Swagger with generated TypeScript client
 
+## 📂 Project Structure
+
+```
+src/
+├── common/         # Shared resources, decorators, filters, guards
+├── config/         # Configuration files
+├── modules/        # Feature modules (Business logic)
+├── app.module.ts   # Root application module
+└── main.ts         # Application entry point
+```
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -173,7 +184,39 @@ CORS_EXTRA_ORIGINS="https://staging.example.com,https://preview.example.com"
 ### Rule Packs
 - `GET /api/v1/rule-packs` - Get available validation rules
 
-## 🔧 Development
+## � Response Format
+
+### Success Response
+
+Most endpoints return the data directly as a JSON object.
+
+```json
+{
+  "ok": true,
+  "version": "1.0.0",
+  "timestamp": "2023-11-30T12:00:00.000Z"
+}
+```
+
+### Error Response
+
+Errors are returned in a standardized format wrapped in an `error` object.
+
+```json
+{
+  "error": {
+    "code": "BAD_REQUEST",
+    "message": "Invalid input data",
+    "details": {
+      "field": "email",
+      "issue": "Invalid email format"
+    },
+    "requestId": "req-1234567890"
+  }
+}
+```
+
+## �🔧 Development
 
 ### Available Scripts
 

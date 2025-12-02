@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
-import { QueueService } from './queue.service';
-import { UploadProcessor } from './upload.processor';
+import { QueueService } from '../../services/queue.service';
+import { UploadProcessor } from '../../services/upload.processor';
 
 @Module({
     imports: [

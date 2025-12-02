@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { RulesService } from './rules.service';
-import { RulePackDto } from './dto/rule-pack.dto';
+import { RulesService } from '../services/rules.service';
+import { RulePackDto } from '../validations/rules/rule-pack.dto';
 
 @ApiTags('Rule Packs')
 @Controller('rule-packs')

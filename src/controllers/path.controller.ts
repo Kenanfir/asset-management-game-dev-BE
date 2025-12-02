@@ -1,8 +1,8 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { PathService } from './path.service';
-import { ResolvePathDto } from './dto/resolve-path.dto';
-import { ResolvedPathDto } from './dto/resolved-path.dto';
+import { PathService } from '../services/path.service';
+import { ResolvePathDto } from '../validations/path/resolve-path.dto';
+import { ResolvedPathDto } from '../validations/path/resolved-path.dto';
 
 @ApiTags('Path Resolution')
 @Controller('path')

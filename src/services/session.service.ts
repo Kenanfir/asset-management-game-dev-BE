@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from '../prisma/prisma.service';
-import { AuthenticatedUser } from './types/authenticated-user.type';
+import { PrismaService } from './prisma.service';
+import { AuthenticatedUser } from '../modules/auth/types/authenticated-user.type';
 
 @Injectable()
 export class SessionService {

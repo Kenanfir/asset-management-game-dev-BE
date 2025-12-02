@@ -12,11 +12,11 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiResponse, ApiConsumes, ApiParam } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from '../auth/decorators/user.decorator';
-import { AuthenticatedUser } from '../auth/types/authenticated-user.type';
-import { UploadsService } from './uploads.service';
-import { CreateUploadDto } from './dto/create-upload.dto';
-import { UploadJobDto } from './dto/upload-job.dto';
+import { User } from '../modules/auth/decorators/user.decorator';
+import { AuthenticatedUser } from '../modules/auth/types/authenticated-user.type';
+import { UploadsService } from '../services/uploads.service';
+import { CreateUploadDto } from '../validations/uploads/create-upload.dto';
+import { UploadJobDto } from '../validations/uploads/upload-job.dto';
 
 @ApiTags('Uploads')
 @Controller('uploads')

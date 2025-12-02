@@ -1,10 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsEnum, IsString, ArrayMinSize } from 'class-validator';
 
-export enum UploadMode {
-    SINGLE = 'single',
-    SEQUENCE = 'sequence',
-}
+import { UploadMode } from '@prisma/client';
 
 export class CreateUploadDto {
     @ApiProperty({

@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
-import { ProjectsService } from './projects.service';
-import { ProjectDto } from './dto/project.dto';
-import { ProjectWithStatsDto } from './dto/project-with-stats.dto';
+import { ProjectsService } from '../services/projects.service';
+import { ProjectDto } from '../validations/projects/project.dto';
+import { ProjectWithStatsDto } from '../validations/projects/project-with-stats.dto';
 
 @ApiTags('Projects')
 @Controller('projects')

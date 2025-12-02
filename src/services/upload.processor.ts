@@ -2,9 +2,9 @@ import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Logger } from '@nestjs/common';
 import { Job } from 'bullmq';
 import { QueueService, UploadJobData } from './queue.service';
-import { StorageService } from '../storage/storage.service';
-import { PrismaService } from '../prisma/prisma.service';
-import { PathService } from '../path/path.service';
+import { StorageService } from './storage.service';
+import { PrismaService } from './prisma.service';
+import { PathService } from './path.service';
 
 @Processor('upload-processing')
 export class UploadProcessor extends WorkerHost {

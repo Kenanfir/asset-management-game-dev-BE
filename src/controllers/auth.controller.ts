@@ -3,10 +3,16 @@ import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
-import { AuthService } from './auth.service';
-import { SessionService } from './session.service';
-import { User } from './decorators/user.decorator';
-import { AuthenticatedUser } from './types/authenticated-user.type';
+interface RequestWithSession extends Request {
+    session: {
+        oauthState?: string;
+    };
+}
+
+import { AuthService } from '../services/auth.service';
+import { SessionService } from '../services/session.service';
+import { User } from '../modules/auth/decorators/user.decorator';
+import { AuthenticatedUser } from '../modules/auth/types/authenticated-user.type';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -19,7 +25,7 @@ export class AuthController {
     @Get('github/start')
     @ApiOperation({ summary: 'Start GitHub OAuth flow' })
     @ApiResponse({ status: 302, description: 'Redirect to GitHub authorization' })
-    async startGitHubAuth(@Req() req: Request, @Res() res: Response) {
+    async startGitHubAuth(@Req() req: RequestWithSession, @Res() res: Response) {
         const state = this.authService.generateState();
         const authUrl = this.authService.getGitHubAuthUrl(state);
 
@@ -38,7 +44,7 @@ export class AuthController {
     async handleGitHubCallback(
         @Query('code') code: string,
         @Query('state') state: string,
-        @Req() req: Request,
+        @Req() req: RequestWithSession,
         @Res() res: Response,
     ) {
         try {

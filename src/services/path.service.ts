@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { ResolvePathDto } from './dto/resolve-path.dto';
+import { ResolvePathDto } from '../validations/path/resolve-path.dto';
 
 @Injectable()
 export class PathService {
