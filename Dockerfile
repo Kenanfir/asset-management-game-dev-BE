@@ -3,6 +3,7 @@ FROM node:20-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
+RUN apk add --no-cache openssl
 
 # Dependencies stage
 FROM base AS deps
