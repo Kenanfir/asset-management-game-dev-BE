@@ -45,5 +45,8 @@ USER nestjs
 
 EXPOSE 4000
 
+ENV PORT 4000
+ENV HOSTNAME "0.0.0.0"
+
 # Start the application
 CMD ["node", "dist/src/main"]
