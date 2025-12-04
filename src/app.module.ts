@@ -20,10 +20,15 @@ import { ConfigValidationSchema } from './config/validation.schema';
     imports: [
         ConfigModule.forRoot({
             isGlobal: true,
-            validationSchema: ConfigValidationSchema,
-            validationOptions: {
-                allowUnknown: true,
-                abortEarly: true,
+            validate: (config) => {
+                const result = ConfigValidationSchema.safeParse(config);
+                if (!result.success) {
+                    const errors = result.error.errors.map((error) => {
+                        return `${error.path.join('.')}: ${error.message}`;
+                    });
+                    throw new Error(`Config validation error: ${errors.join(', ')}`);
+                }
+                return result.data;
             },
         }),
         LoggerModule.forRoot({
