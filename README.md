@@ -92,7 +92,7 @@ CORS_EXTRA_ORIGINS="https://staging.example.com,https://preview.example.com"
 - **SubAsset**: Individual assets with versioning and path templates
 - **AssetHistory**: Version history for each sub-asset
 - **UploadJob**: Background processing jobs for file uploads
-- **User**: GitHub OAuth users
+- **User**: GitHub OAuth users (stores access token for API operations)
 
 ### Key Features
 
@@ -168,6 +168,7 @@ CORS_EXTRA_ORIGINS="https://staging.example.com,https://preview.example.com"
 - `GET /api/v1/projects` - List all projects
 - `GET /api/v1/projects/:id` - Get project details
 - `GET /api/v1/projects/:id/assets` - Get project assets (paginated)
+- `POST /api/v1/projects/:id/readme` - Update project README on GitHub
 
 ### Assets
 - `GET /api/v1/assets/groups` - List asset groups

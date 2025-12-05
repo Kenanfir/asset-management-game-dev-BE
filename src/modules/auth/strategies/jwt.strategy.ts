@@ -19,10 +19,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(req: FastifyRequest, payload: any) {
-        const sessionId = (req as any).cookies?.sid;
+        const sessionId = payload.sessionId;
 
         if (!sessionId) {
-            throw new UnauthorizedException('No session found');
+            throw new UnauthorizedException('Invalid token payload');
         }
 
         const user = await this.sessionService.validateSession(sessionId);

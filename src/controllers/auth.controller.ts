@@ -60,7 +60,8 @@ export class AuthController {
             const githubUser = await this.authService.getGitHubUser(accessToken);
 
             // Create or update user in database
-            const user = await this.authService.createOrUpdateUser(githubUser);
+            // Create or update user in database
+            const user = await this.authService.createOrUpdateUser(githubUser, accessToken);
 
             // Create session
             const sessionId = await this.sessionService.createSession(user);

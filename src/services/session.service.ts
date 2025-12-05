@@ -20,7 +20,9 @@ export class SessionService {
         this.sessions.set(sessionId, user);
 
         this.logger.log(`Session created for user ${user.login}`);
-        return sessionId;
+
+        // Sign the session ID into a JWT
+        return this.jwtService.sign({ sessionId });
     }
 
     async getSession(sessionId: string): Promise<AuthenticatedUser | null> {

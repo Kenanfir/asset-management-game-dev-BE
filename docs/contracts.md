@@ -231,6 +231,34 @@ Get all assets for a project with pagination.
 
 ---
 
+### POST /projects/:id/readme
+
+Update the project's README.md file on GitHub.
+
+**Path Parameters:**
+- `id` (string, required): Project ID
+
+**Headers:**
+- `Cookie: sid=<session_id>` (required)
+
+**Response:**
+```json
+{
+  "message": "Success",
+  "content": {
+    "message": "README updated successfully"
+  },
+  "errors": []
+}
+```
+
+**Errors:**
+- `401 Unauthorized`: No valid session found
+- `404 Not Found`: Project does not exist
+- `500 Internal Server Error`: Failed to update file on GitHub
+
+---
+
 ## Assets
 
 ### GET /assets/groups

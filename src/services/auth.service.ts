@@ -85,19 +85,21 @@ export class AuthService {
         return response.json();
     }
 
-    async createOrUpdateUser(githubUser: GitHubUser): Promise<AuthenticatedUser> {
+    async createOrUpdateUser(githubUser: GitHubUser, accessToken: string): Promise<AuthenticatedUser> {
         const user = await this.prisma.user.upsert({
             where: { githubId: githubUser.id },
             update: {
                 login: githubUser.login,
                 name: githubUser.name,
                 avatarUrl: githubUser.avatar_url,
+                githubAccessToken: accessToken,
             },
             create: {
                 githubId: githubUser.id,
                 login: githubUser.login,
                 name: githubUser.name,
                 avatarUrl: githubUser.avatar_url,
+                githubAccessToken: accessToken,
             },
         });
 
@@ -109,5 +111,12 @@ export class AuthService {
             name: user.name,
             avatarUrl: user.avatarUrl,
         };
+    }
+
+    async getUserWithToken(userId: string): Promise<{ githubAccessToken: string | null } | null> {
+        return this.prisma.user.findUnique({
+            where: { id: userId },
+            select: { githubAccessToken: true },
+        });
     }
 }

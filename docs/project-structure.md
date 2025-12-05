@@ -73,6 +73,9 @@ asset-management-game-dev-BE/
 │   │   │   │   └── jwt.strategy.ts
 │   │   │   └── types/
 │   │   │       └── authenticated-user.type.ts
+│   │   ├── github/
+│   │   │   ├── github.module.ts
+│   │   │   └── github.service.ts
 │   │   ├── path/
 │   │   │   └── path.module.ts
 │   │   ├── prisma/
@@ -205,6 +208,7 @@ AppModule
 │   ├── PassportModule
 │   └── JwtModule
 ├── ProjectsModule
+├── GithubModule
 ├── AssetsModule
 ├── UploadsModule
 │   ├── QueueModule
